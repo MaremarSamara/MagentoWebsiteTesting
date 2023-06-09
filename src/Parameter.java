@@ -23,15 +23,19 @@ public class Parameter {
 	int IndexForEmail=rand.nextInt(0,100);
 	
 	// this is the number of item
+	int radiantNumber = 3;
+	String radiantNumberString = "3";
+	int breatheNumber = 2;
+	String breatheNumberString = "2";
 
-		String radiantNumber = "3";
-		String breatheNumber = "2";
+	int argusNumber = 4;
+	String argusNumberString = "4";
 
-		String argusNumber = "4";
+	int heroNumber = 1;
+	String heroNumberString = "1";
 
-		String heroNumber = "1";
-
-		String backpackNumber = "5";
+	int backpackNumber = 5;
+	String backpackNumberString = "5";
 
 		int numberOfItemTobeAdded = 5;
 

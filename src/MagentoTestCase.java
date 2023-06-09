@@ -1,3 +1,5 @@
+import static org.testng.Assert.assertEquals;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.ArrayList;
@@ -82,7 +84,7 @@ public class MagentoTestCase extends Parameter {
 				WebElement Quantity = driver.findElement(By.xpath("//*[@id=\"qty\"]"));
 				Quantity.clear();
 
-				Quantity.sendKeys(radiantNumber);
+				Quantity.sendKeys(radiantNumberString);
 
 				WebElement ColorBox = driver
 						.findElement(By.xpath("//*[@id=\"product-options-wrapper\"]/div/div/div[2]/div"));
@@ -104,7 +106,7 @@ public class MagentoTestCase extends Parameter {
 				WebElement Quantity = driver.findElement(By.xpath("//*[@id=\"qty\"]"));
 				Quantity.clear();
 
-				Quantity.sendKeys(breatheNumber);
+				Quantity.sendKeys(breatheNumberString);
 
 				WebElement ColorBox = driver
 						.findElement(By.xpath("//*[@id=\"product-options-wrapper\"]/div/div/div[2]/div"));
@@ -128,7 +130,7 @@ public class MagentoTestCase extends Parameter {
 				WebElement Quantity = driver.findElement(By.xpath("//*[@id=\"qty\"]"));
 				Quantity.clear();
 
-				Quantity.sendKeys(argusNumber);
+				Quantity.sendKeys(argusNumberString);
 
 				WebElement ColorBox = driver
 						.findElement(By.xpath("//*[@id=\"product-options-wrapper\"]/div/div/div[2]/div"));
@@ -163,7 +165,7 @@ public class MagentoTestCase extends Parameter {
 				sizes.get(randomindex).click();
 				WebElement Quantity = driver.findElement(By.xpath("//*[@id=\"qty\"]"));
 
-				Quantity.sendKeys(heroNumber);
+				Quantity.sendKeys(heroNumberString);
 
 				WebElement AddtoCart = driver.findElement(By.xpath("//*[@id=\"product-addtocart-button\"]"));
 				AddtoCart.click();
@@ -173,7 +175,7 @@ public class MagentoTestCase extends Parameter {
 				WebElement Quantity = driver.findElement(By.xpath("//*[@id=\"qty\"]"));
 				Quantity.clear();
 
-				Quantity.sendKeys(backpackNumber);
+				Quantity.sendKeys(backpackNumberString);
 
 				WebElement AddtoCart = driver.findElement(By.xpath("//*[@id=\"product-addtocart-button\"]"));
 				AddtoCart.click();
@@ -220,50 +222,57 @@ public class MagentoTestCase extends Parameter {
 		SubmitButton.click();
 	}
 
-	@Test()
-	public void this_is_a_test() {
+	@Test(priority = 5)
+	public void confirm_the_price() {
 
-		List<String> PriceList = new ArrayList<String>();
+		WebElement Radient = driver.findElement(By.xpath("//*[@id=\"old-price-1556-widget-product-grid\"]/span"));
+		WebElement Breathe = driver.findElement(By.xpath("//*[@id=\"old-price-1812-widget-product-grid\"]/span"));
+		WebElement Argus = driver.findElement(By.xpath("//*[@id=\"old-price-694-widget-product-grid\"]/span"));
+		WebElement Hero = driver.findElement(By.xpath("//*[@id=\"old-price-158-widget-product-grid\"]/span"));
+		WebElement Backpack = driver.findElement(By.xpath("//*[@id=\"old-price-6-widget-product-grid\"]/span"));
 
-		PriceList.add(RadinetPrice);
-		PriceList.add(breathePrice);
-		PriceList.add(argusPrice);
-		PriceList.add(heroPrice);
-		PriceList.add(backpackPrice);
+		String RadientString = Radient.getText().replace("$", "").replace(".", "");
+		int RadientInt = Integer.parseInt(RadientString);
+		int resultRadient = RadientInt / 100;
 
+		System.out.println(resultRadient);
 
-		for (int i = 0; i < PriceList.size(); i++) {
+		String BreatheString = Breathe.getText().replace("$", "").replace(".", "");
+		;
+		int BreatheInt = Integer.parseInt(BreatheString);
+		int resultBreath = BreatheInt / 100;
+		System.out.println(resultBreath);
 
-			String ListPriceUpdated = PriceList.get(i);
+		String ArgusString = Argus.getText().replace("$", "").replace(".", "");
+		;
+		int ArgusInt = Integer.parseInt(ArgusString);
+		int resultArgus = ArgusInt / 100;
+		System.out.println(resultArgus);
 
-			String output = ListPriceUpdated.replaceAll("\\$|\\.\\d+", "");
+		String HeroString = Hero.getText().replace("$", "").replace(".", "");
+		;
+		int HeroInt = Integer.parseInt(HeroString);
+		int resultHero = HeroInt / 100;
+		System.out.println(resultHero);
 
-			int finalPrice = Integer.parseInt(output);
-			
-			System.out.println(finalPrice);
+		String BackpackString = Backpack.getText().replace("$", "").replace(".", "");
+		;
+		int BackpackInt = Integer.parseInt(BackpackString);
+		int resultBackpack = BackpackInt / 100;
+		System.out.println(resultBackpack);
 
-		}
-		
-		
-		List<String> ItemNumber = new ArrayList<String>();
+		int expected = (resultArgus * argusNumber) + (resultRadient * radiantNumber) + (resultBreath * breatheNumber)
+				+ (resultHero * heroNumber) + (resultBackpack * backpackNumber);
 
-		ItemNumber.add(radiantNumber);
-		ItemNumber.add(breatheNumber);
-		ItemNumber.add(argusNumber);
-		ItemNumber.add(heroNumber);
-		ItemNumber.add(backpackNumber);
+		System.out.println(expected);
 
-		
-		
-		for (int i = 0; i < ItemNumber.size(); i++) {
+		String thePriceinTheCart = driver
+				.findElement(By.xpath("//*[@id=\"opc-sidebar\"]/div[1]/table/tbody/tr[4]/td/strong/span")).getText()
+				.replace("$", "").replace(".", "");
+		int thePriceAsInt = Integer.parseInt(thePriceinTheCart);
+		int Actual = thePriceAsInt / 100;
 
-			String ItemNumberUpdated = ItemNumber.get(i);
+		assertEquals(Actual, expected);
 
-			int finalPrice = Integer.parseInt(ItemNumberUpdated);
-			
-			System.out.println(finalPrice);
-
-		}
-   	
-	
-}}
+	}
+} 
